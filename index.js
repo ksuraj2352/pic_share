@@ -7,7 +7,7 @@ const cors = require("cors");
 // Mongo Connection
 
 mongoose
-  .connect("mongodb://localhost/Vehicle-Management-System")
+  .connect("mongodb://localhost/Pic-Sharing")
   .then(() => console.log("Connected to Mongo DB"))
   .catch(() => console.log("Could not connect to Mongo DB"));
 
@@ -15,9 +15,10 @@ mongoose
 dotenv.config();
 
 // Port Configuration
-const port = process.env.PORT || 5050;
+const port = process.env.PORT || 5000;
 
 // Router Imports
+const signup =  require("./routes/signup")
 
 // Initailaising App
 const app = express();
@@ -32,6 +33,7 @@ app.use(
 app.use(express.json());
 
 // Routes
+app.use("/users", signup);
 
 // Listener
 app.listen(port, () => console.log(`Listening on port ${port}`));
