@@ -28,6 +28,14 @@ const userSchema = new mongoose.Schema(
       maxlength: 128,
       required: true,
     },
+    isActivated: {
+      type: Boolean,
+      default: false,
+    },
+    activationCode: {
+      type: String,
+      unique: true,
+    },
   },
   { timestamps: true }
 );

@@ -19,14 +19,27 @@ router.post("/login", async (req, res) => {
     //  User Inputs
     const { email, password } = req.body;
 
-    // empty email and password not allowed.
+    // empty email and password not allowed
     if (!(email && password)) {
-      res.status(400).send({ status: false, message: "Inputs required." });
+      return res.status(400).send({ status: false, message: "Inputs required." });
     }
 
     // Check that user exist or not
 
     let user = await User.findOne({ email: email });
+
+    // Check that account is activated or not
+
+    if (!user.isActivated) {
+      return res
+        .status(400)
+        .send({
+          status: false,
+          message:
+            "PLease activate you account. An activation link has been sent to your Email. ",
+        });
+       
+    }
 
     // If exist then check the password is correct or not
 
@@ -35,6 +48,7 @@ router.post("/login", async (req, res) => {
 
       const token = generateToken(user._id, email);
 
+      // Throwing Response
       res.send({
         status: true,
         message: "Logged in Succesfully",
