@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema(
       minlength: 4,
       maxlength: 12,
       trim: true,
+      lowercase : true
     },
     password: {
       type: String,
@@ -34,15 +35,15 @@ const userSchema = new mongoose.Schema(
       minlength: 3,
       maxlength: 128,
       required: true,
-      trim : true 
+      trim: true,
     },
     age: {
       type: Number,
     },
     gender: {
       type: String,
-      maxlength : 8,
-      trim : true
+      maxlength: 8,
+      trim: true,
     },
     phoneNumber: {
       type: Number,
@@ -58,6 +59,12 @@ const userSchema = new mongoose.Schema(
     profilePic: {
       type: String,
     },
+    pictures: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Picture",
+      },
+    ],
   },
   { timestamps: true, versionKey: false }
 );
@@ -77,7 +84,8 @@ function validateUsersSchema(user) {
       .trim()
       .required()
       .min(4)
-      .max(12),
+      .max(12)
+      .lowercase(),
     password: Joi.string()
       .trim()
       .required()
@@ -100,10 +108,10 @@ function validateProfile(data) {
     age: Joi.number()
       .max(99)
       .min(0),
-    gender: Joi.string().trim().max(8),
-    phoneNumber: Joi.number()
-      .max(9999999999)
-      
+    gender: Joi.string()
+      .trim()
+      .max(8),
+    phoneNumber: Joi.number().max(9999999999),
   });
 
   return schema.validate(data);

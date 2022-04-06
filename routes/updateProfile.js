@@ -1,8 +1,6 @@
 const express = require("express");
 const { User, validateProfile } = require("../models/user");
-const bcrypt = require("bcrypt");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const { verifyAuthorization } = require("../middleware/auth");
 const multer = require("multer");
@@ -10,9 +8,6 @@ const AWS = require("aws-sdk");
 
 // Get config variables
 dotenv.config();
-
-// access secret token
-const secret_token = process.env.SECRET_TOKEN;
 
 // AWS setup
 const s3 = new AWS.S3({
@@ -83,10 +78,11 @@ router.post(
       if (error) {
         return res.status(400).send({ status: false, error });
       }
-      // return data
+      //  Updating Profile Pic Link
       user.profilePic = data.Location;
-      console.log(data);
+      // Saving The doc
       await user.save();
+      // Throwing Result
       res.send({ status: true, user });
     });
   }
@@ -166,4 +162,4 @@ module.exports = router;
 
 // hmum log aisa kr skte he ki hum profile pic jb naya upload hoga purana wala ko delete kr skte he
 // view picture ke liye v ek route create krna he
-//  Error handling krna he ya fir try catch block use krna hoga 
+//  Error handling krna he ya fir try catch block use krna hoga

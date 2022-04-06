@@ -21,6 +21,8 @@ const port = process.env.PORT || 5000;
 const signup = require("./routes/signup");
 const login = require("./routes/login");
 const updateProfile = require("./routes/updateProfile");
+const picture = require("./routes/picture");
+const search = require("./routes/search");
 
 // Initailaising App
 const app = express();
@@ -36,6 +38,8 @@ app.use(express.json());
 
 // Routes
 app.use("/users", signup, login, updateProfile);
+app.use("/picture" , picture)
+app.use("/search" , search)
 
 // Listener
 app.listen(port, () => console.log(`Listening on port ${port}`));
