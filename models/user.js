@@ -16,6 +16,13 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    username: {
+      type: String,
+      required: true,
+      minlength: 4,
+      maxlength: 12,
+      trim: true,
+    },
     password: {
       type: String,
       required: true,
@@ -27,6 +34,18 @@ const userSchema = new mongoose.Schema(
       minlength: 3,
       maxlength: 128,
       required: true,
+      trim : true 
+    },
+    age: {
+      type: Number,
+    },
+    gender: {
+      type: String,
+      maxlength : 8,
+      trim : true
+    },
+    phoneNumber: {
+      type: Number,
     },
     isActivated: {
       type: Boolean,
@@ -36,8 +55,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
+    profilePic: {
+      type: String,
+    },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
 
 // Validating User Inputs
@@ -51,6 +73,11 @@ function validateUsersSchema(user) {
       .max(32)
       .email()
       .lowercase(),
+    username: Joi.string()
+      .trim()
+      .required()
+      .min(4)
+      .max(12),
     password: Joi.string()
       .trim()
       .required()
@@ -65,6 +92,23 @@ function validateUsersSchema(user) {
   return schema.validate(user);
 }
 
+function validateProfile(data) {
+  const schema = Joi.object({
+    fullName: Joi.string()
+      .min(3)
+      .max(128),
+    age: Joi.number()
+      .max(99)
+      .min(0),
+    gender: Joi.string().trim().max(8),
+    phoneNumber: Joi.number()
+      .max(9999999999)
+      
+  });
+
+  return schema.validate(data);
+}
+
 //  Creating Models
 
 const User = mongoose.model("User", userSchema);
@@ -73,3 +117,4 @@ const User = mongoose.model("User", userSchema);
 
 exports.User = User;
 exports.validateUsersSchema = validateUsersSchema;
+exports.validateProfile = validateProfile;

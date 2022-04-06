@@ -20,7 +20,7 @@ const port = process.env.PORT || 5000;
 // Router Imports
 const signup = require("./routes/signup");
 const login = require("./routes/login");
-const updatePassword = require("./routes/updatePassword");
+const updateProfile = require("./routes/updateProfile");
 
 // Initailaising App
 const app = express();
@@ -35,7 +35,7 @@ app.use(
 app.use(express.json());
 
 // Routes
-app.use("/users", signup, login, updatePassword);
+app.use("/users", signup, login, updateProfile);
 
 // Listener
 app.listen(port, () => console.log(`Listening on port ${port}`));

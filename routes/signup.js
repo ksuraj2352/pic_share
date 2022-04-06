@@ -28,14 +28,24 @@ router.post("/signup", async (req, res) => {
     }
 
     // Checking email
-
     let user = await User.findOne({
       email: req.body.email,
     });
     if (user) {
       return res.status(400).send({
         status: false,
-        message: "User already exists",
+        message: "Email already exists",
+      });
+    }
+
+    // Checking Username
+    user = await User.findOne({
+      username: req.body.username,
+    });
+    if (user) {
+      return res.status(400).send({
+        status: false,
+        message: "Username already exists",
       });
     }
 
@@ -49,6 +59,7 @@ router.post("/signup", async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       fullName: req.body.fullName,
+      username : req.body.username,
       activationCode: token,
     });
 
@@ -76,10 +87,11 @@ router.post("/signup", async (req, res) => {
       message: "Sign up Successfully. Please verify the mail.",
       email: user.email,
       fullName: user.fullName,
+      username : user.username
     });
   } catch (err) {
     console.log({ status: false, message: "Something Went wrong" });
-    res.status(400).send({status : false , error : err})
+    res.status(400).send({ status: false, error: err });
   }
 });
 
