@@ -155,4 +155,41 @@ router.get("/:pictureId/like", verifyAuthorization, async (req, res) => {
   res.send("working");
 });
 
+// @Route GET /picture/:pictureId/
+// @desc View a pic
+// @access Private Access
+router.get("/:pictureId", verifyAuthorization, async (req, res) => {
+  //  Checking User
+  const user = await User.findById(req.user.user_id);
+  if (!user) {
+    return res.status(400).send({
+      status: false,
+      message: "No user Found.",
+    });
+  }
+
+  // Validating the object ID
+  const validObjectId = mongoose.Types.ObjectId.isValid(req.params.pictureId);
+  if (!validObjectId) {
+    return res.status(400).send({
+      status: false,
+      message: "Incorrect Picture Id",
+    });
+  }
+
+  // fetching picture
+  const picture = await Picture.findById(req.params.pictureId);
+
+  // Checking picture exist or not
+  if (!picture) {
+    return res.status(400).send({
+      status: false,
+      message: "No picture found",
+    });
+  }
+
+  // Throwing Result
+  res.send({ status: true, picture: picture });
+});
+
 module.exports = router;
