@@ -12,10 +12,16 @@ const pictureSchema = new mongoose.Schema({
   pictureName: {
     type: String,
   },
-  userId : {
-    type : mongoose.Schema.Types.ObjectId,
-    ref : "User"
-  }
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 //  Creating Models

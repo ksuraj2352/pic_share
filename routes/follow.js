@@ -24,7 +24,7 @@ router.get("/:id", verifyAuthorization, async (req, res) => {
   if (!validObjectId) {
     return res.status(400).send({
       status: false,
-      message: "Incorrect Object Id",
+      message: "Incorrect follower Id",
     });
   }
 

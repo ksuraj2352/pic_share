@@ -6,6 +6,7 @@ const { verifyAuthorization } = require("../middleware/auth");
 const multer = require("multer");
 const AWS = require("aws-sdk");
 const { Picture } = require("../models/picture");
+const { default: mongoose } = require("mongoose");
 
 // Get config variables
 dotenv.config();
@@ -105,11 +106,53 @@ router.post(
   }
 );
 
-// @Route GET /picture/:id/like
+// @Route GET /picture/:pictureId/like
 // @desc Liking a pic
 // @access Private Access
-router.get("/:id/like", (req, res) => {
-  res.send("working")
+router.get("/:pictureId/like", verifyAuthorization, async (req, res) => {
+  //  Checking User
+  const user = await User.findById(req.user.user_id);
+  if (!user) {
+    return res.status(400).send({
+      status: false,
+      message: "No user Found.",
+    });
+  }
+
+  // Validating the object ID
+  const validObjectId = mongoose.Types.ObjectId.isValid(req.params.pictureId);
+  // console.log(validObjectId);
+
+  if (!validObjectId) {
+    return res.status(400).send({
+      status: false,
+      message: "Incorrect Picture Id",
+    });
+  }
+
+  // fetching picture
+  const picture = await Picture.findById(req.params.pictureId);
+
+  // Checking picture exist or not
+  if (!picture) {
+    return res.status(400).send({
+      status: false,
+      message: "No picture found",
+    });
+  }
+
+  //  Checking the pic already liked or not
+  if (picture.likes.includes(user._id)) {
+    return res.status(400).send({ status: false, message: "Already liked" });
+  }
+
+  //  Clicking Logic
+  picture.likes.push(user._id);
+
+  // Storing The doc
+  await picture.save();
+
+  res.send("working");
 });
 
 module.exports = router;
