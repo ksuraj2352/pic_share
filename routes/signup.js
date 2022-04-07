@@ -59,7 +59,7 @@ router.post("/signup", async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       fullName: req.body.fullName,
-      username : req.body.username,
+      username: req.body.username,
       activationCode: token,
     });
 
@@ -87,7 +87,7 @@ router.post("/signup", async (req, res) => {
       message: "Sign up Successfully. Please verify the mail.",
       email: user.email,
       fullName: user.fullName,
-      username : user.username
+      username: user.username,
     });
   } catch (err) {
     console.log({ status: false, message: "Something Went wrong" });

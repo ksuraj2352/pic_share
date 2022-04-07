@@ -26,6 +26,7 @@ const search = require("./routes/search");
 const follow = require("./routes/follow");
 const unfollow = require("./routes/unfollow");
 const pictureFeed = require("./routes/pictureFeed");
+const password = require("./routes/password");
 
 // Initailaising App
 const app = express();
@@ -46,6 +47,7 @@ app.use("/search", search);
 app.use("/follow", follow);
 app.use("/unfollow", unfollow);
 app.use("/picturefeed", pictureFeed);
+app.use("/password", password);
 
 // Listener
 app.listen(port, () => console.log(`Listening on port ${port}`));

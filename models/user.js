@@ -123,6 +123,10 @@ function validateProfile(data) {
     gender: Joi.string()
       .trim()
       .max(8),
+    password: Joi.string()
+      .trim()
+      .min(6)
+      .max(128),
     phoneNumber: Joi.number().max(9999999999),
   });
 
