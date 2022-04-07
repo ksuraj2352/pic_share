@@ -86,7 +86,7 @@ router.post(
       const picture = new Picture({
         pictureLocation: data.Location,
         pictureName: data.Key,
-        userId : user._id
+        userId: user._id,
       });
 
       //  Pushing the Object ID of the pictures to the user
@@ -104,5 +104,12 @@ router.post(
     });
   }
 );
+
+// @Route GET /picture/:id/like
+// @desc Liking a pic
+// @access Private Access
+router.get("/:id/like", (req, res) => {
+  res.send("working")
+});
 
 module.exports = router;

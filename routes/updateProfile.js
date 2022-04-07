@@ -164,3 +164,4 @@ module.exports = router;
 // view picture ke liye v ek route create krna he
 //  Error handling krna he ya fir try catch block use krna hoga
 //  Unfollow a user
+//  Hm my pictures bolke ek route bna skte he 

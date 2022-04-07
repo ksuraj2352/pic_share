@@ -24,6 +24,7 @@ const updateProfile = require("./routes/updateProfile");
 const picture = require("./routes/picture");
 const search = require("./routes/search");
 const follow = require("./routes/follow");
+const pictureFeed = require("./routes/pictureFeed");
 
 // Initailaising App
 const app = express();
@@ -39,9 +40,10 @@ app.use(express.json());
 
 // Routes
 app.use("/users", signup, login, updateProfile);
-app.use("/picture" , picture)
-app.use("/search" , search)
-app.use("/follow" , follow)
+app.use("/picture", picture);
+app.use("/search", search);
+app.use("/follow", follow);
+app.use("/picturefeed", pictureFeed);
 
 // Listener
 app.listen(port, () => console.log(`Listening on port ${port}`));
