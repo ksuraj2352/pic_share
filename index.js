@@ -24,6 +24,7 @@ const updateProfile = require("./routes/updateProfile");
 const picture = require("./routes/picture");
 const search = require("./routes/search");
 const follow = require("./routes/follow");
+const unfollow = require("./routes/unfollow");
 const pictureFeed = require("./routes/pictureFeed");
 
 // Initailaising App
@@ -43,6 +44,7 @@ app.use("/users", signup, login, updateProfile);
 app.use("/picture", picture);
 app.use("/search", search);
 app.use("/follow", follow);
+app.use("/unfollow", unfollow);
 app.use("/picturefeed", pictureFeed);
 
 // Listener

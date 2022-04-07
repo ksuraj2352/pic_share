@@ -4,8 +4,8 @@ const { verifyAuthorization } = require("../middleware/auth");
 const { User } = require("../models/user");
 const router = express.Router();
 
-// @Route GET /follow/:id
-// @desc Follow a user
+// @Route GET /unfollow/:id
+// @desc Unollow a user
 // @access Private Access
 router.get("/:id", verifyAuthorization, async (req, res) => {
   //  Checking User
@@ -24,41 +24,49 @@ router.get("/:id", verifyAuthorization, async (req, res) => {
   if (!validObjectId) {
     return res.status(400).send({
       status: false,
-      message: "Incorrect follower Id",
+      message: "Incorrect unfollower Id",
     });
   }
 
-  //   Checking that user followed and following user is same or not
+  //   Checking that user unfollowed and unfollowing user is same or not
   if (req.user.user_id == req.params.id) {
     return res
       .status(400)
-      .send({ status: false, message: "User can't followed themselves." });
+      .send({ status: false, message: "User can't unfollowed themselves." });
   }
 
   // Finding the user , whom to be followed
-  const followedUser = await User.findById(req.params.id);
+  const unFollowedUser = await User.findById(req.params.id);
 
   // Checking followed User
-  if (!followedUser) {
+  if (!unFollowedUser) {
     return res.status(400).send({
       status: false,
-      message: "No Followed User Found",
+      message: "No Unfollowed User Found",
     });
   }
 
   //  Checking that user is already followed or not
-  const alreadyFollowed = user.followings.includes(req.params.id);
-  if (alreadyFollowed) {
-    return res.status(400).send({ status: false, message: "Already Followed" });
+  const alreadyUnfollowed = user.followings.includes(req.params.id);
+  if (!alreadyUnfollowed) {
+    return res
+      .status(400)
+      .send({ status: false, message: "Already Unfollowed" });
   }
 
   //   Pushing the datas
-  user.followings.push(followedUser._id);
-  followedUser.followers.push(req.user.user_id);
+  await User.findOneAndUpdate(
+    { _id: user._id },
+    { $pull: { followings: req.params.id } }
+  );
+
+  await User.findOneAndUpdate(
+    { _id: req.params.id },
+    { $pull: { followers: user._id } }
+  );
 
   //   Saving the doc
   await user.save();
-  await followedUser.save();
 
   //    Throwing Res
   res.send({
