@@ -4,10 +4,13 @@ const { Picture } = require("../models/picture");
 const { User } = require("../models/user");
 const router = express.Router();
 
-// @Route GET /picturefeed
-// @desc List all pics of a user's followings
+// @Route GET /picturefeed?page=1
+// @desc List all pics of a user's followings(Not more than 5)
 // @access Private Access
 router.get("/", verifyAuthorization, async (req, res) => {
+  // Pagination Data
+  const pageNumber = req.query.page;
+  const pageSize = 5;
   //  Checking User
   const user = await User.findById(req.user.user_id);
   if (!user) {
@@ -27,17 +30,12 @@ router.get("/", verifyAuthorization, async (req, res) => {
   }
 
   //   Getting pics of the FOLLOWINGS user
-  let pics = [];
-  await Promise.all(
-    followings.map(async (followingId) => {
-      const pic = await Picture.find({
-        userId: followingId,
-      });
-      pics.push(pic);
-    })
-  );
+  const pics = await Picture.find({ userId: followings })
+    .sort({ _id: -1 })
+    .skip((pageNumber - 1) * pageSize)
+    .limit(pageSize);
 
-  //   Throw Result
+  // Throw Result
   res.send({
     status: true,
     feed: pics,
