@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
       minlength: 4,
       maxlength: 12,
       trim: true,
-      lowercase : true
+      lowercase: true,
     },
     password: {
       type: String,
@@ -59,6 +59,18 @@ const userSchema = new mongoose.Schema(
     profilePic: {
       type: String,
     },
+    followers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    followings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     pictures: [
       {
         type: mongoose.Schema.Types.ObjectId,

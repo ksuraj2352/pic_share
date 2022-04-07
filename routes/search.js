@@ -19,12 +19,14 @@ router.get("/", verifyAuthorization, async (req, res) => {
     });
   }
 
-  //    Searching Users
-
+  //  Searching Users
   const allUsers = await User.find({ username: new RegExp(search) });
 
   if (allUsers.length == 0) {
-    return res.status(400).send({ status: false, message: "No users found with the given username" });
+    return res.status(400).send({
+      status: false,
+      message: "No users found with the given username",
+    });
   }
 
   //   Throwing Results

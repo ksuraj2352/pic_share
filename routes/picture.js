@@ -86,6 +86,7 @@ router.post(
       const picture = new Picture({
         pictureLocation: data.Location,
         pictureName: data.Key,
+        userId : user._id
       });
 
       //  Pushing the Object ID of the pictures to the user
