@@ -162,10 +162,4 @@ router.post("/updateprofile", verifyAuthorization, async (req, res) => {
 
 module.exports = router;
 
-// hmum log aisa kr skte he ki hum profile pic jb naya upload hoga purana wala ko delete kr skte he
-// view picture ke liye v ek route create krna he
-// Error handling krna he ya fir try catch block use krna hoga
-// Unfollow a user   DONE
-// Hm my pictures bolke ek route bna skte he
 
-// password route not completed yet

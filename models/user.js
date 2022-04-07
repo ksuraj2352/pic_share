@@ -48,6 +48,10 @@ const userSchema = new mongoose.Schema(
     phoneNumber: {
       type: Number,
     },
+    resetPasswordCode : {
+      type: String,
+      unique: true,
+    },
     isActivated: {
       type: Boolean,
       default: false,
