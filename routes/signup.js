@@ -90,8 +90,8 @@ router.post("/signup", async (req, res) => {
       username: user.username,
     });
   } catch (err) {
-    console.log({ status: false, message: "Something Went wrong" });
-    res.status(400).send({ status: false, error: err });
+    // console.log({ status: false, message: "Something Went wrong" , err});
+    res.status(400).send({ status: false, error: err , message : "Something went wrong" });
   }
 });
 

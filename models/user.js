@@ -50,7 +50,6 @@ const userSchema = new mongoose.Schema(
     },
     resetPasswordCode : {
       type: String,
-      unique: true,
     },
     isActivated: {
       type: Boolean,

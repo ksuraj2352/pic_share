@@ -19,7 +19,7 @@ router.get("/:id", verifyAuthorization, async (req, res) => {
 
   // Validating the object ID
   const validObjectId = mongoose.Types.ObjectId.isValid(req.params.id);
-  console.log(validObjectId);
+  // console.log(validObjectId);
 
   if (!validObjectId) {
     return res.status(400).send({

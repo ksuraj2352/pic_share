@@ -8,7 +8,7 @@ dotenv.config();
 // const user = process.env.USER;
 // const pass = process.env.PASS;
 
-console.log(process.env.USER, process.env.PASS);
+// console.log(process.env.USER, process.env.PASS);
 
 const transport = nodemailer.createTransport({
   service: "gmail",

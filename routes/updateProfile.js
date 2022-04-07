@@ -26,8 +26,8 @@ const storage = multer.memoryStorage({
 const fileChecker = (req, file, cb) => {
   const regularExp = new RegExp(/\.(gif|jpe?g|tiff?|png)$/i);
   const isImage = regularExp.test(file.originalname);
-  console.log(file.originalname);
-  console.log(isImage);
+  // console.log(file.originalname);
+  // console.log(isImage);
   if (isImage) {
     cb(null, true);
   } else {
@@ -56,7 +56,7 @@ router.post(
       });
     }
 
-    console.log(req.file);
+    // console.log(req.file);
     // Checking the file exist or not
     if (!req.file || req.file === undefined) {
       return res.status(400).send({
